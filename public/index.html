@@ -1,42 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Redis JSON 配置编辑器</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Redis JSON Config Editor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="icons/app_icon.png">
 </head>
 <body>
-<div id="main-container">
-    <!-- 左侧面板 -->
-    <div id="left-panel">
-        <h1>Chat Flow 步骤</h1>
-        <ul id="flow-list"></ul>
+<div class="container">
+    <div class="sidebar">
+        <h1>Chat Flow Steps</h1>
+        <ul id="flowList"></ul>
         <div class="button-group">
-            <button id="add-step-btn">+ 添加步骤</button>
-            <button id="remove-step-btn">- 删除步骤</button>
-            <button id="move-up-btn">↑ 上移</button>
-            <button id="move-down-btn">↓ 下移</button>
+            <button id="addStepBtn">+ Add Step</button>
+            <button id="removeStepBtn" class="danger">- Remove Step</button>
+            <button id="moveUpBtn">↑ Move Up</button>
+            <button id="moveDownBtn">↓ Move Down</button>
         </div>
-        <div id="url-link">
-            <a href="https://zhang-lujin-github-io.vercel.app/" target="_blank">访问目标网址</a>
-        </div>
+        <a href="https://zhang-lujin-github-io.vercel.app/" target="_blank" class="url-link">访问目标网址</a>
     </div>
-    <!-- 右侧面板 -->
-    <div id="right-panel">
-        <div id="content-frame">
-            <label for="step-name">步骤名称</label>
-            <input type="text" id="step-name" placeholder="请输入步骤名称...">
+    <div class="content">
+        <div class="content-inner">
+            <label for="stepName">Step Name</label>
+            <input type="text" id="stepName" placeholder="Enter step name...">
 
-            <label for="display-text">显示文本</label>
-            <textarea id="display-text" placeholder="请输入显示文本..."></textarea>
+            <label for="displayText">Display Text</label>
+            <textarea id="displayText" placeholder="Enter display text..."></textarea>
 
-            <label for="system-prompt">系统提示</label>
-            <textarea id="system-prompt" placeholder="请输入系统提示..."></textarea>
+            <label for="systemPrompt">System Prompt</label>
+            <textarea id="systemPrompt" placeholder="Enter system prompt..."></textarea>
 
-            <button id="save-btn">💾 保存更改</button>
+            <button id="saveBtn">💾 Save Changes</button>
         </div>
     </div>
 </div>
-<script src="/script.js"></script>
+
+<script src="main.js"></script>
 </body>
 </html>

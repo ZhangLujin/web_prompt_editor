@@ -1,76 +1,76 @@
 /* 全局样式 */
 body {
-    background-color: #F5F5F5;
-    font-family: "Calibri", sans-serif;
-    font-size: 15pt;
-    color: #2C3E50;
     margin: 0;
-    padding: 0;
+    font-family: 'Calibri', sans-serif;
+    font-size: 15px;
+    background-color: #F5F5F5;
+    color: #2C3E50;
 }
 
-#main-container {
+.container {
     display: flex;
     height: 100vh;
 }
 
-#left-panel {
+/* 左侧面板样式 */
+.sidebar {
     width: 25%;
-    padding: 30px 15px 30px 30px;
+    min-width: 300px;
+    background-color: #FFFFFF;
+    padding: 30px;
+    box-sizing: border-box;
+    border-right: 1px solid #D3D3D3;
     display: flex;
     flex-direction: column;
 }
 
-#left-panel h1 {
-    font-size: 20pt;
-    font-weight: bold;
+.sidebar h1 {
+    font-size: 20px;
     margin-bottom: 20px;
 }
 
-#flow-list {
-    list-style-type: none;
+#flowList {
+    list-style: none;
     padding: 0;
     margin: 0;
     flex-grow: 1;
     overflow-y: auto;
-    background-color: #FFFFFF;
-    border-radius: 8px;
-    border: 1px solid #D3D3D3;
-    padding: 5px;
 }
 
-#flow-list li {
+#flowList li {
     padding: 10px;
     margin: 5px 0;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-#flow-list li.selected {
+#flowList li.selected {
     background-color: #1ABC9C;
     color: white;
 }
 
-#flow-list li:hover:not(.selected) {
+#flowList li:hover:not(.selected) {
     background-color: #A2D5C6;
 }
 
 .button-group {
-    margin-top: 15px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .button-group button {
-    background-color: #1ABC9C;
-    color: white;
-    border: none;
     padding: 12px 24px;
+    border: none;
     border-radius: 6px;
     font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
-    font-size: 12pt;
-    margin-bottom: 15px;
+    color: white;
+    background-color: #1ABC9C;
     cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .button-group button:hover {
@@ -81,103 +81,95 @@ body {
     background-color: #149174;
 }
 
-.button-group button#remove-step-btn {
+.button-group button.danger {
     background-color: #E74C3C;
 }
 
-.button-group button#remove-step-btn:hover {
+.button-group button.danger:hover {
     background-color: #C0392B;
 }
 
-#url-link {
-    text-align: center;
+.url-link {
     margin-top: auto;
-}
-
-#url-link a {
+    text-align: center;
     color: #1ABC9C;
     text-decoration: none;
     font-size: 12pt;
     transition: color 0.3s;
 }
 
-#url-link a:hover {
+.url-link:hover {
     color: #149174;
     text-decoration: underline;
 }
 
-#right-panel {
+/* 右侧内容样式 */
+.content {
     flex-grow: 1;
-    overflow-y: auto;
-    padding: 30px;
-}
-
-#content-frame {
     background-color: #FFFFFF;
-    border-radius: 8px;
-    border: 1px solid #D3D3D3;
     padding: 30px;
-    display: flex;
-    flex-direction: column;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
-#content-frame label {
-    color: #2C3E50;
+.content-inner {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-inner label {
+    display: block;
+    font-size: 14px;
     font-weight: bold;
-    font-size: 14pt;
     margin-top: 20px;
 }
 
-#content-frame input[type="text"],
-#content-frame textarea {
-    background-color: #FFFFFF;
+.content-inner input[type="text"],
+.content-inner textarea {
+    width: 100%;
+    padding: 12px;
     border: 1px solid #D3D3D3;
     border-radius: 6px;
-    padding: 12px;
-    color: #2C3E50;
-    font-size: 12pt;
-    width: 100%;
+    font-size: 14px;
     box-sizing: border-box;
-    margin-top: 10px;
 }
 
-#content-frame input[type="text"]:focus,
-#content-frame textarea:focus {
-    border: 2px solid #1ABC9C;
+.content-inner input[type="text"]:focus,
+.content-inner textarea:focus {
+    border-color: #1ABC9C;
     outline: none;
 }
 
-#content-frame textarea {
+.content-inner textarea {
     resize: vertical;
     min-height: 100px;
 }
 
-#content-frame #display-text {
-    min-height: 220px;
+#displayText {
+    min-height: 150px;
 }
 
-#content-frame #system-prompt {
-    min-height: 550px;
+#systemPrompt {
+    min-height: 300px;
 }
 
-#save-btn {
-    background-color: #1ABC9C;
-    color: white;
-    border: none;
+#saveBtn {
+    margin-top: 20px;
     padding: 12px 24px;
+    border: none;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 14pt;
-    margin-top: 30px;
-    align-self: flex-end;
+    color: white;
+    background-color: #1ABC9C;
     cursor: pointer;
+    font-size: 14px;
     transition: background-color 0.3s;
 }
 
-#save-btn:hover {
+#saveBtn:hover {
     background-color: #16A085;
 }
 
-#save-btn:active {
+#saveBtn:active {
     background-color: #149174;
 }
