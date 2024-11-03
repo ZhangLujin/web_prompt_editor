@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <title>Redis JSON Config Editor</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="icons/app_icon.png">
+    <link rel="icon" href="icons/app_icon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
 <div class="container">
-    <div class="sidebar">
+    <!-- Left Panel -->
+    <div class="left-panel">
         <h1>Chat Flow Steps</h1>
         <ul id="flowList"></ul>
         <div class="button-group">
-            <button id="addStepBtn">+ Add Step</button>
-            <button id="removeStepBtn" class="danger">- Remove Step</button>
-            <button id="moveUpBtn">↑ Move Up</button>
-            <button id="moveDownBtn">↓ Move Down</button>
+            <button id="addStepBtn" class="animated-button"><img src="icons/add.png" alt="">+ Add Step</button>
+            <button id="removeStepBtn" class="animated-button danger-button"><img src="icons/remove.png" alt="">- Remove Step</button>
+            <button id="moveUpBtn" class="animated-button"><img src="icons/up.png" alt="">↑ Move Up</button>
+            <button id="moveDownBtn" class="animated-button"><img src="icons/down.png" alt="">↓ Move Down</button>
         </div>
         <a href="https://zhang-lujin-github-io.vercel.app/" target="_blank" class="url-link">访问目标网址</a>
     </div>
-    <div class="content">
-        <div class="content-inner">
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+        <div class="content-frame">
             <label for="stepName">Step Name</label>
             <input type="text" id="stepName" placeholder="Enter step name...">
 
@@ -30,11 +35,23 @@
             <label for="systemPrompt">System Prompt</label>
             <textarea id="systemPrompt" placeholder="Enter system prompt..."></textarea>
 
-            <button id="saveBtn">💾 Save Changes</button>
+            <button id="saveBtn" class="animated-button save-button"><img src="icons/save.png" alt="">💾 Save Changes</button>
         </div>
     </div>
 </div>
 
-<script src="main.js"></script>
+<!-- Modal for messages -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Modal Title</h2>
+        <p id="modalMessage">This is the modal message.</p>
+        <div class="modal-buttons">
+            <button id="modalOkBtn">OK</button>
+            <button id="modalCancelBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
