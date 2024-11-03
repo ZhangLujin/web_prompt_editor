@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "public": true,
+  "builds": [
+    {
+      "src": "api/redis_config.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/get_config",
+      "methods": ["GET"],
+      "dest": "api/redis_config.py"
+    },
+    {
+      "src": "/api/save_config",
+      "methods": ["POST"],
+      "dest": "api/redis_config.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}
