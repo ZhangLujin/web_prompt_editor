@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "public": true,
   "builds": [
     {
       "src": "api/redis_config.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb" }
     },
     {
       "src": "public/**/*",
@@ -13,13 +13,7 @@
   ],
   "routes": [
     {
-      "src": "/api/get_config",
-      "methods": ["GET"],
-      "dest": "api/redis_config.py"
-    },
-    {
-      "src": "/api/save_config",
-      "methods": ["POST"],
+      "src": "/api/(.*)",
       "dest": "api/redis_config.py"
     },
     {

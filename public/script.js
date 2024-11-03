@@ -21,13 +21,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fetch initial config data from backend
     fetch('/api/get_config')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                // Handle HTTP errors
+                return response.json().then(err => {
+                    throw new Error(err.error || 'Error fetching configuration');
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             configData = data;
             updateFlowList();
         })
         .catch(error => {
-            showMessage('Error', 'Failed to load configuration: ' + error, 'error');
+            showMessage('Error', 'Failed to load configuration: ' + error.message, 'error');
         });
 
     function updateFlowList() {
@@ -138,18 +146,21 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(configData)
         })
             .then(response => {
-                if (response.ok) {
-                    showMessage('Success', 'Changes saved successfully!', 'success');
-                    updateFlowList();
-                    selectStep(selectedStepIndex);
-                } else {
-                    response.text().then(text => {
-                        showMessage('Save Error', 'Error saving config: ' + text, 'error');
+                if (!response.ok) {
+                    // Handle HTTP errors
+                    return response.json().then(err => {
+                        throw new Error(err.error || 'Error saving configuration');
                     });
                 }
+                return response.json();
+            })
+            .then(data => {
+                showMessage('Success', data.message || 'Changes saved successfully!', 'success');
+                updateFlowList();
+                selectStep(selectedStepIndex);
             })
             .catch(error => {
-                showMessage('Save Error', 'Error saving config: ' + error, 'error');
+                showMessage('Save Error', 'Error saving config: ' + error.message, 'error');
             });
     });
 

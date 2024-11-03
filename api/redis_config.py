@@ -1,5 +1,6 @@
 import json
 import redis
+from flask import Flask, request, jsonify
 
 # Assign default Redis credentials directly in the code
 REDIS_HOST = 'redis-13548.c253.us-central1-1.gce.redns.redis-cloud.com'
@@ -13,6 +14,33 @@ redis_client = redis.StrictRedis(
     password=REDIS_PASSWORD,
     decode_responses=True
 )
+
+app = Flask(__name__)
+
+@app.route('/api/get_config', methods=['GET'])
+def get_config():
+    try:
+        config_data = redis_client.get('chat_flow_config')
+        if config_data is None:
+            config = {"flow": []}
+        else:
+            config = json.loads(config_data)
+        return jsonify(config), 200
+    except Exception as e:
+        return jsonify({'error': 'Error loading config: ' + str(e)}), 500
+
+@app.route('/api/save_config', methods=['POST'])
+def save_config():
+    try:
+        config = request.get_json()
+        config_data = json.dumps(config, ensure_ascii=False, indent=2)
+        redis_client.set('chat_flow_config', config_data)
+        return jsonify({'message': 'Config saved successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': 'Error saving config: ' + str(e)}), 500
+
+# The Flask app object is used as the entry point for Vercel's serverless function.
+# Ensure that it's accessible at the module level.
 
 # Vercel Serverless Function
 def handler(request):
