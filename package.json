@@ -1,0 +1,13 @@
+{
+  "name": "redis-config-editor",
+  "version": "1.0.0",
+  "description": "Redis JSON Config Editor Web Application",
+  "dependencies": {
+    "redis": "^4.6.7"
+  },
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "main": "api/config.js",
+  "license": "ISC"
+}
