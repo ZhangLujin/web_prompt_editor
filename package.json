@@ -1,13 +1,19 @@
 {
-  "name": "redis-config-editor",
+  "name": "web_prompt_editor",
   "version": "1.0.0",
-  "description": "Redis JSON Config Editor Web Application",
-  "dependencies": {
-    "redis": "^4.6.7"
-  },
+  "description": "Redis JSON Config Editor with Explanations Support",
+  "main": "main.js",
   "scripts": {
-    "start": "vercel dev"
+    "start": "electron .",
+    "package": "electron-packager . web_prompt_editor --platform=darwin --arch=x64 --out=release-builds --overwrite",
+    "package:win": "electron-packager . web_prompt_editor --platform=win32 --arch=x64 --out=release-builds --overwrite"
   },
-  "main": "api/config.js",
-  "license": "ISC"
+  "dependencies": {
+    "electron": "^25.3.1",
+    "redis": "^4.6.7",
+    "marked": "^4.0.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^17.1.0"
+  }
 }

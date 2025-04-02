@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Redis JSON Config Editor</title>
+  <!-- 引入字体：Roboto 和 Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- 输入框弹窗 -->
+<div id="prompt-box" style="display: none;">
+  <div id="prompt-content">
+    <h2 id="prompt-title">提示</h2>
+    <p id="prompt-text">消息内容</p>
+    <input type="text" id="prompt-input">
+    <div class="button-group">
+      <button id="prompt-ok-btn">确定</button>
+      <button id="prompt-cancel-btn" class="secondary">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 登录界面弹窗 -->
+<div id="login-dialog">
+  <div class="dialog-container">
+    <h1>Redis 配置登录</h1>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="host-input">Redis 主机:</label>
+        <input type="text" id="host-input" value="redis-10825.c10.us-east-1-4.ec2.redns.redis-cloud.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="port-input">Redis 端口:</label>
+        <input type="number" id="port-input" value="10825" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password-input">Redis 密码:</label>
+        <input type="password" id="password-input" value="63o9B87wMX5p3WQElweHWHD4o3iOvx4y" required>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="remember-checkbox" checked>
+        <label for="remember-checkbox">记住设置</label>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" id="login-btn">登录</button>
+        <button type="button" id="cancel-login-btn" class="secondary">取消</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 主界面内容 -->
+<div id="main-content" style="display: none;">
+  <div id="left-panel">
+
+    <!-- 流程管理部分 -->
+    <div id="flow-management">
+      <h1>选择流程</h1>
+      <select id="flow-select"></select>
+      <div class="button-group">
+        <button id="create-flow-btn">+ 新建流程</button>
+        <button id="rename-flow-btn" class="secondary">✎ 重命名流程</button>
+        <button id="delete-flow-btn" class="danger">- 删除流程</button>
+        <button id="set-default-btn" class="secondary">设为默认流程</button>
+      </div>
+    </div>
+
+    <h1>步骤信息</h1>
+    <ul id="flow-list"></ul>
+
+    <div class="button-group">
+      <button id="add-step-btn">+ 添加步骤</button>
+      <button id="remove-step-btn" class="danger">- 移除步骤</button>
+      <button id="move-up-btn">↑ 上移</button>
+      <button id="move-down-btn">↓ 下移</button>
+    </div>
+    <a href="https://zhang-lujin-github-io-sys.vercel.app/" id="url-label" target="_blank">访问目标网址</a>
+<!--    <a href="https://testing-ivory-delta.vercel.app/index.html" id="url-label" target="_blank">访问目标网址</a>-->
+<!--    <a href="https://testing-ivory-delta.vercel.app/" id="url-label" target="_blank">访问目标网址</a>-->
+  </div>
+
+  <div id="right-panel">
+    <div id="content-frame">
+      <div class="form-group">
+        <label for="step-name">步骤名称</label>
+        <input type="text" id="step-name" placeholder="输入步骤名称..." required>
+      </div>
+
+      <div class="form-group">
+        <label for="display-text">显示文本</label>
+        <textarea id="display-text" placeholder="输入显示文本..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="system-prompt">系统提示</label>
+        <textarea id="system-prompt" placeholder="输入系统提示..." required></textarea>
+      </div>
+
+      <!-- 新增解释选项卡部分 -->
+      <div class="form-group">
+        <label for="explanations-container">解释选项卡</label>
+        <div id="explanations-container" class="explanations-container">
+          <div class="explanations-header">
+            <h3>可折叠解释内容</h3>
+            <button id="add-explanation-btn">+ 添加选项卡</button>
+          </div>
+          <div id="explanations-list" class="explanations-list">
+            <!-- 动态生成的解释选项卡将在这里显示 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部按钮区域 -->
+      <div class="bottom-buttons">
+        <button id="save-btn">💾 保存更改</button>
+        <button id="export-json-btn">导出为 JSON</button>
+        <button id="import-json-btn">导入 JSON</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 消息框弹窗 -->
+<div id="message-box" style="display: none;">
+  <div id="message-content">
+    <h2 id="message-title">提示</h2>
+    <p id="message-text">消息内容</p>
+    <div class="button-group">
+      <button id="message-ok-btn">确定</button>
+      <button id="message-cancel-btn" class="secondary">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 在 body 末尾添加解释选项卡编辑弹窗 -->
+<div id="explanation-editor-modal">
+  <div class="explanation-editor-content">
+    <h2>编辑解释选项卡</h2>
+    <div class="form-group">
+      <label for="explanation-title-input">标题</label>
+      <input type="text" id="explanation-title-input" placeholder="输入选项卡标题...">
+    </div>
+    <div class="form-group">
+      <label for="explanation-content-input">内容 (支持Markdown格式)</label>
+      <textarea id="explanation-content-input" placeholder="输入选项卡内容..." rows="10"></textarea>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="explanation-collapsed-checkbox">
+      <label for="explanation-collapsed-checkbox">默认折叠</label>
+    </div>
+    <div class="form-group">
+      <label>预览</label>
+      <div id="explanation-preview" class="explanation-preview"></div>
+    </div>
+    <div class="button-group">
+      <button id="save-explanation-btn">保存</button>
+      <button id="cancel-explanation-btn" class="secondary">取消</button>
+    </div>
+  </div>
+</div>
+
+<script src="renderer.js"></script>
+</body>
+</html>
